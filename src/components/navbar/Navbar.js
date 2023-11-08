@@ -28,7 +28,7 @@ function NavBar() {
               <LinkContainer to="/test"><Nav.Link>Test</Nav.Link></LinkContainer>
             </Nav>
             <Nav style={{"justifyContent": "right"}}>
-              <LinkContainer to="/Login"><Nav.Link>Login</Nav.Link></LinkContainer>
+              <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>

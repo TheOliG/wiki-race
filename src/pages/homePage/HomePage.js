@@ -10,7 +10,7 @@ function HomePage() {
           alt=""
           src={DALE_LOGO}
           className="img-fluid rounded"
-          style={{"max-height": "65vh"}}
+          style={{"maxHeight": "65vh"}}
         />
       </div>
       </div>
