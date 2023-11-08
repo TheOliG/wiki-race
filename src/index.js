@@ -1,13 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Importing the Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+//Static
+import NavBar from './components/navbar/Navbar';
+
+// Routes
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from './pages/homePage/HomePage';
+import LoginPage from './pages/loginPage/LoginPage';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <NavBar/>
+      <Routes>
+        <Route path='/'>
+          <Route index element={<HomePage/>}/>
+          <Route path="login" element={<LoginPage/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
