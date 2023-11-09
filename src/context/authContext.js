@@ -31,9 +31,8 @@ export const AuthContextProvider = ({ children }) => {
         // console.log("reloaded");
         getDoc(doc(db, "user", userInfo.uid)).then((userDatabaseInfo) => {
           if (userDatabaseInfo) {
-            const setUserData = userDatabaseInfo;
             userDatabaseInfo.uid = userInfo.uid;
-            setUser(setUserData);
+            setUser(userDatabaseInfo);
             //Creating a new snapshot to listen to the new user info
             userSnapshotUnsubscriber();
             setUserSnapshotUnsubscriber(()=>createUserSnapshot(userInfo.uid));
