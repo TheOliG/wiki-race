@@ -12,7 +12,7 @@ export const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // All the arrows are important because it must store a function in a function https://stackoverflow.com/questions/55621212/is-it-possible-to-react-usestate-in-react 
-  const [userSnapshotUnsubscriber, setUserSnapshotUnsubscriber] = useState(()=>()=>{return null});
+  let userSnapshotUnsubscriber = ()=>null;
 
 
   //This creates a listener that will call every time the user data is changed
@@ -20,6 +20,7 @@ export const AuthContextProvider = ({ children }) => {
     return onSnapshot(doc(db, "users", userID), async (changedDoc) => {
       const newData = changedDoc.data();
       newData.uid = userID;
+      console.log(newData);
       setUser(newData);
     });
   }
@@ -35,13 +36,15 @@ export const AuthContextProvider = ({ children }) => {
             setUser(userDatabaseInfo);
             //Creating a new snapshot to listen to the new user info
             userSnapshotUnsubscriber();
-            setUserSnapshotUnsubscriber(()=>createUserSnapshot(userInfo.uid));
+            // Es lint seems to think this wont do anything but it does lol
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            userSnapshotUnsubscriber = createUserSnapshot(userInfo.uid);
           } else {
             const setUserData = { uid: userInfo.uid };
             setUser(setUserData);
             //Creating a new snapshot to listen to the new user info
             userSnapshotUnsubscriber();
-            setUserSnapshotUnsubscriber(createUserSnapshot(userInfo.uid));
+            userSnapshotUnsubscriber = createUserSnapshot(userInfo.uid);
           }
         });
       } else {

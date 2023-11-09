@@ -3,7 +3,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { LinkContainer } from 'react-router-bootstrap';
 import DALE_LOGO from '../../images/DALE_LOGO.jpg' 
-import { auth } from '../../firestoreInstance/firestoreInstance';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';

@@ -23,8 +23,8 @@ function SignUpPage() {
 
   // REGEX
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}$/;
-  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-  const userNameRegex = /^\w{1,15}$/
+  const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const userNameRegex = /^\w{1,15}$/;
 
   const handleGoogleSignIn = async (e) => {
     setLoading(true);
