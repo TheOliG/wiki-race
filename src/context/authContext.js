@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
 
   //This creates a listener that will call every time the user data is changed
   function createUserSnapshot(userID) {
-    return onSnapshot(doc(db, "users", userID), async (changedDoc) => {
+    return onSnapshot(doc(db, "user", userID), async (changedDoc) => {
       const newData = changedDoc.data();
       newData.uid = userID;
       console.log(newData);
@@ -36,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
             setUser(userDatabaseInfo);
             //Creating a new snapshot to listen to the new user info
             userSnapshotUnsubscriber();
-            // Es lint seems to think this wont do anything but it does lol
+            // This implementaiton of storing the unsubscriber is realy weird and breaks sometimes, should probably use a different implementation
             // eslint-disable-next-line react-hooks/exhaustive-deps
             userSnapshotUnsubscriber = createUserSnapshot(userInfo.uid);
           } else {

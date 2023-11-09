@@ -11,13 +11,10 @@ import NavBar from './components/navbar/Navbar';
 
 // Auth
 import { AuthContextProvider } from './context/authContext';
-import { auth } from './firestoreInstance/firestoreInstance';
 
 // Routes
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import HomePage from './pages/homePage/HomePage';
-import LoginPage from './pages/authentication/LoginPage';
-import SignUpPage from './pages/authentication/SignUpPage';
+import { BrowserRouter } from "react-router-dom";
+import RouteList from './RouteList';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,14 +23,7 @@ root.render(
     <AuthContextProvider>
       <BrowserRouter>
         <NavBar/>
-        <Routes>
-          <Route path='/'>
-            <Route index element={<HomePage/>}/>
-            
-            <Route path="login" element={auth.currentUser === null ? <LoginPage/> : <Navigate replace to={'/'}/>}/>
-            <Route path="signup" element={<SignUpPage/>}/>
-          </Route>
-        </Routes>
+        <RouteList/>
       </BrowserRouter>
     </AuthContextProvider>
   </React.StrictMode>

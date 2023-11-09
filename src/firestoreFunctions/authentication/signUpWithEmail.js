@@ -7,7 +7,7 @@ export async function signUpWithEmail(email, password, userName) {
     await createUserWithEmailAndPassword(auth, email, password);
 
     // Creates a new entry in the user collection
-    const userRef = doc(db, "users", auth.currentUser.uid);
+    const userRef = doc(db, "user", auth.currentUser.uid);
     await setDoc(userRef, {
         userName: userName,
         newUser: true,

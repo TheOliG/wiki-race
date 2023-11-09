@@ -8,7 +8,7 @@ export async function signInWithGoogle(){
     await signInWithPopup(auth, provider);
 
 
-    const userRef = doc(db, "users", auth.currentUser.uid);
+    const userRef = doc(db, "user", auth.currentUser.uid);
     const userDoc = await getDoc(userRef);
 
     //If it is a new user
