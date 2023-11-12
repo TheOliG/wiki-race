@@ -11,6 +11,7 @@ export async function signUpWithEmail(email, password, userName) {
     await setDoc(userRef, {
         userName: userName,
         newUser: true,
+        uid: auth.currentUser.uid,
     });
 
     //Updates the display name for the user

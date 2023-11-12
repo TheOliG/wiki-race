@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from '../../firestoreInstance/firestoreInstance';
 import { Spinner } from "react-bootstrap";
+import PersonalProfile from "../../components/profile/PersonalProfile";
 
 
 function ProfilePage() {
@@ -32,7 +33,7 @@ function ProfilePage() {
     })
     
   }, []);
-  if(loading)
+
   return (
     <div>
       {loading ?
@@ -42,13 +43,7 @@ function ProfilePage() {
           </Spinner>
         </div>
       :
-        <div>
-          {profileData.uid === user.uid ?
-            <h1>Your Profile {profileData.userName}</h1>
-            :
-            <h1>{profileData?.userName + "'s "} Profile</h1>
-          }
-        </div>
+        <PersonalProfile user={profileData}/>
       }
 
     </div>

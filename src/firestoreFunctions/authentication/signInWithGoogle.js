@@ -17,6 +17,7 @@ export async function signInWithGoogle(){
         await setDoc(userRef, {
             userName: auth.currentUser.displayName,
             newUser: true,
+            uid: auth.currentUser.uid,
         });
     }
 }
