@@ -8,7 +8,7 @@ function JoinPublicGame() {
   return(
     <Card>
       <CardHeader>
-        Join The Public Loby!
+        Join The Public Lobby!
       </CardHeader>
       <CardBody>
         <Row>

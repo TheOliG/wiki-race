@@ -33,7 +33,7 @@ function NavBar() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <LinkContainer to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
-              <LinkContainer to="/test"><Nav.Link>Test</Nav.Link></LinkContainer>
+              <LinkContainer to="/play"><Nav.Link>Play</Nav.Link></LinkContainer>
             </Nav>
             
             {user ?

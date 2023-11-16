@@ -1,9 +1,10 @@
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import JoinPublicGame from "../../components/play/JoinPublicGame";
+import { LinkContainer } from "react-router-bootstrap";
 
 
 
-function PlayGame() {
+function PlayGamePage() {
   return (
     <div>
       <Row>
@@ -19,12 +20,14 @@ function PlayGame() {
         </Col>
       </Row>
       <Row>
-        <div className="m-3 text-center">
-          <JoinPublicGame/>
-        </div>
+        <Col>
+          <div className="m-3 text-center">
+          <LinkContainer to="/play/createLobby"><Button className="btn-secondary">Create A New Lobby!</Button></LinkContainer>
+          </div>
+        </Col>
       </Row>
     </div>
   );
 }
 
-export default PlayGame;
+export default PlayGamePage;
