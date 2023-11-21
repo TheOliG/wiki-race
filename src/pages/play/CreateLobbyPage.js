@@ -1,4 +1,4 @@
-import { Alert, Card, Col, Container, Row, Form, Button, InputGroup } from "react-bootstrap";
+import { Alert, Card, Col, Container, Row, Form, Button, InputGroup, FormGroup } from "react-bootstrap";
 import { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import WikiPageSearch from "../../components/play/search/WikiPageSearch";
@@ -6,6 +6,8 @@ import WikiPageSearch from "../../components/play/search/WikiPageSearch";
 
 function CreateLobbyPage() {
   const [error, setError] = useState("");
+  const [startURL, setStartURL] = useState("");
+  const [targetURL, setTargetURL] = useState("");
 
   return (
     <div>
@@ -25,26 +27,26 @@ function CreateLobbyPage() {
                 <Col>
                   <Form.Group controlId="formStartingPage">
                     <Form.Label>Starting Page:</Form.Label>
-                    <InputGroup>
-                      <Form.Control></Form.Control>
-                      <Button variant="outline-secondary" onClick={()=>{alert("TODO")}}>
-                        Randomise
-                      </Button>
-                    </InputGroup>
-                    <Form.Text>Please enter the URL for the starting page</Form.Text>
+                    <WikiPageSearch setURL={setStartURL}/>
+                    <Form.Text>Please enter the title of the starting page</Form.Text>
                   </Form.Group>
+                  <a href={startURL} target="_blank" rel="noreferrer">{startURL}</a>
                 </Col>  
                 <Col>
                   <Form.Group controlId="formTargetPage">
                     <Form.Label>Target Page:</Form.Label>
-                    <InputGroup>
-                      <WikiPageSearch/>
-                      <Button variant="outline-secondary" onClick={()=>{alert("TODO")}} style={{"justify-content":"right"}}>
-                        Randomise
-                      </Button>
-                    </InputGroup>
-                    <Form.Text>Please enter the URL for the target page</Form.Text>
+                      <WikiPageSearch setURL={setTargetURL}/>
+                    <Form.Text>Please enter the title of the target page</Form.Text>
                   </Form.Group>
+                  <a href={targetURL} target="_blank" rel="noreferrer">{targetURL}</a>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Form.Label>Max Players:</Form.Label>
+                    <Form.Control type="number"/>
+                  </FormGroup>
                 </Col>
               </Row>
             </Form>
