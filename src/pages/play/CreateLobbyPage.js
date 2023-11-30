@@ -1,4 +1,4 @@
-import { Alert, Card, Col, Container, Row, Form, Button, InputGroup, FormGroup } from "react-bootstrap";
+import { Alert, Card, Col, Container, Row, Form, Button, FormGroup } from "react-bootstrap";
 import { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import WikiPageSearch from "../../components/play/search/WikiPageSearch";
@@ -6,8 +6,22 @@ import WikiPageSearch from "../../components/play/search/WikiPageSearch";
 
 function CreateLobbyPage() {
   const [error, setError] = useState("");
+  const [maxPlayers, setMaxPlayers] = useState(5);
+  const [timeLimit, setTimeLimit] = useState(120);
   const [startURL, setStartURL] = useState("");
   const [targetURL, setTargetURL] = useState("");
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    if(startURL === "" || targetURL === ""){
+      setError("Starting/Target Page Must Be Specified");
+    }else if(maxPlayers < 2 || maxPlayers > 15) {
+      setError("Max Players Must Be Between 2 and 15");
+    }else if(timeLimit < 20 || timeLimit > 600){
+      setError("Time Limit Must Be Between 20 and 600 Seconds");
+    }
+    
+  };
 
   return (
     <div>
@@ -44,21 +58,21 @@ function CreateLobbyPage() {
               <Row>
                 <Col>
                   <FormGroup>
-                    <Form.Label>Max Players:</Form.Label>
-                    <Form.Control type="number"/>
+                    <Form.Label >Max Players:</Form.Label>
+                    <Form.Control type="number" value={maxPlayers} onChange={(e)=>{setMaxPlayers(e.target.value);}}/>
                   </FormGroup>
                 </Col>
                 <Col>
                   <FormGroup>
-                    <Form.Label>Time Limit:</Form.Label>
-                    <Form.Control type="number"/>
+                    <Form.Label>Time Limit (Seconds):</Form.Label>
+                    <Form.Control type="number" value={timeLimit} onChange={(e)=>{setTimeLimit(e.target.value);}}/>
                   </FormGroup>
                 </Col>
               </Row>
               <Row>
                 <Col className='text-center mt-3'>
                   <FormGroup>
-                    <Button className="btn-success">Start!</Button>
+                    <Button className="btn-success" onClick={handleSubmit}>Start!</Button>
                   </FormGroup>
                 </Col>
               </Row>
@@ -66,7 +80,7 @@ function CreateLobbyPage() {
           </Container>
         </Card.Body>
 
-        <Card.Footer>Dont Have An Account Yet? Sign Up <LinkContainer to='/signUp'><a href='/'>Here!</a></LinkContainer></Card.Footer>
+        <Card.Footer>Want To Save Your Progress? Sign Up <LinkContainer to='/signUp'><a href='/'>Here!</a></LinkContainer></Card.Footer>
       </Card>
     </div>
   );
