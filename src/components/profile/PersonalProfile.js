@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Col, Row, Alert } from 'react-bootstrap';
+import { Card, CardBody, CardHeader, Col, Row } from 'react-bootstrap';
 import { useAuth } from '../../context/authContext';
 import { auth } from '../../firestoreInstance/firestoreInstance';
 import { Navigate } from "react-router-dom";
@@ -30,7 +30,6 @@ function PersonalProfile(props){
                             </Col>
                         </Row>
                     </CardBody>
-                    
                 </Card>
                 
                 <Card className='m-3'>
