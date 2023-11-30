@@ -48,6 +48,19 @@ function CreateLobbyPage() {
                     <Form.Control type="number"/>
                   </FormGroup>
                 </Col>
+                <Col>
+                  <FormGroup>
+                    <Form.Label>Time Limit:</Form.Label>
+                    <Form.Control type="number"/>
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col className='text-center mt-3'>
+                  <FormGroup>
+                    <Button className="btn-success">Start!</Button>
+                  </FormGroup>
+                </Col>
               </Row>
             </Form>
           </Container>

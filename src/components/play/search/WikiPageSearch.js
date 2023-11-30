@@ -8,6 +8,7 @@ function WikiPageSearch( { setURL } ){
   const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState([]);
   const [optionLinks, setOptionLinks] = useState({});
+  const [randomLoading, setRandomLoading] = useState(false);
 
   const baseString = 'https://en.wikipedia.org/w/api.php?origin=*';
 
@@ -55,6 +56,8 @@ function WikiPageSearch( { setURL } ){
   }
 
   const handleRandom = ()=>{
+    setRandomLoading(true);
+
     const params = {
       action: "query",
       grnnamespace: "0",
@@ -65,13 +68,18 @@ function WikiPageSearch( { setURL } ){
       inprop: "url",
     }
     let searchString = baseString;
-    console.log(searchString);
     Object.keys(params).forEach((key)=>{searchString += "&" + key + "=" + params[key];});
     
     axios.get(searchString).then((res)=>{
       setURL(res.data.query.pages[0].canonicalurl);
       setSelected([res.data.query.pages[0].title]); 
+    }).catch((err)=>{
+      console.log('Error getting random page: ' + err);
+    }).finally(()=>{
+      setRandomLoading(false);
     })
+
+    
   }
 
 
@@ -87,7 +95,7 @@ function WikiPageSearch( { setURL } ){
         delay={400}
         selected={selected}
       />
-      <Button variant="outline-secondary" onClick={handleRandom}>
+      <Button variant="outline-secondary" onClick={handleRandom} disabled={randomLoading}>
         Randomise
       </Button>
     </InputGroup>
