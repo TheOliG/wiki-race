@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button, InputGroup } from "react-bootstrap";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 
-function WikiPageSearch( { setURL } ){
+function WikiPageSearch( { setURL, setTitle } ){
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -48,9 +48,11 @@ function WikiPageSearch( { setURL } ){
   const handleSelection = (s)=>{
     if(s in optionLinks){
       setURL(optionLinks[s]);
+      setTitle(s);
     }
     else{
       setURL('');
+      setTitle('');
     }
     setSelected(s);
   }
@@ -72,6 +74,7 @@ function WikiPageSearch( { setURL } ){
     
     axios.get(searchString).then((res)=>{
       setURL(res.data.query.pages[0].canonicalurl);
+      setTitle(res.data.query.pages[0].title);
       setSelected([res.data.query.pages[0].title]); 
     }).catch((err)=>{
       console.log('Error getting random page: ' + err);

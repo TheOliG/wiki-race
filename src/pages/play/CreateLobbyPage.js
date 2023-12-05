@@ -2,6 +2,8 @@ import { Alert, Card, Col, Container, Row, Form, Button, FormGroup } from "react
 import { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import WikiPageSearch from "../../components/play/search/WikiPageSearch";
+import { createNewLobby } from "../../firestoreFunctions/loby/createNewLobby";
+import { useNavigate } from "react-router-dom";
 
 
 function CreateLobbyPage() {
@@ -10,6 +12,10 @@ function CreateLobbyPage() {
   const [timeLimit, setTimeLimit] = useState(120);
   const [startURL, setStartURL] = useState("");
   const [targetURL, setTargetURL] = useState("");
+  const [startTitle, setStartTitle] = useState("");
+  const [targetTitle, setTargetTitle] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -19,6 +25,21 @@ function CreateLobbyPage() {
       setError("Max Players Must Be Between 2 and 15");
     }else if(timeLimit < 20 || timeLimit > 600){
       setError("Time Limit Must Be Between 20 and 600 Seconds");
+    }
+    else{
+      createNewLobby({
+        startURL: startURL, 
+        startTitle: startTitle,
+        targetURL: targetURL, 
+        targetTitle: targetTitle,
+        maxPlayers: maxPlayers, 
+        timeLimit: timeLimit
+      }).then((res)=>{
+        navigate(`/play/${res.id}`);
+      }).catch((err)=>{
+        console.log(err);
+        setError(JSON.stringify(err));
+      });
     }
     
   };
@@ -41,7 +62,7 @@ function CreateLobbyPage() {
                 <Col>
                   <Form.Group controlId="formStartingPage">
                     <Form.Label>Starting Page:</Form.Label>
-                    <WikiPageSearch setURL={setStartURL}/>
+                    <WikiPageSearch setURL={setStartURL} setTitle={setStartTitle}/>
                     <Form.Text>Please enter the title of the starting page</Form.Text>
                   </Form.Group>
                   <a href={startURL} target="_blank" rel="noreferrer">{startURL}</a>
@@ -49,7 +70,7 @@ function CreateLobbyPage() {
                 <Col>
                   <Form.Group controlId="formTargetPage">
                     <Form.Label>Target Page:</Form.Label>
-                      <WikiPageSearch setURL={setTargetURL}/>
+                      <WikiPageSearch setURL={setTargetURL} setTitle={setTargetTitle}/>
                     <Form.Text>Please enter the title of the target page</Form.Text>
                   </Form.Group>
                   <a href={targetURL} target="_blank" rel="noreferrer">{targetURL}</a>
