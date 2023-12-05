@@ -6,6 +6,8 @@ import { useAuth } from "./context/authContext";
 import ProfilePage from "./pages/profile/ProfilePage";
 import PlayGamePage from "./pages/play/PlayGamePage";
 import CreateLobbyPage from "./pages/play/CreateLobbyPage";
+import LobbyPage from "./pages/play/LobbyPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 
 function RouteList() {
@@ -24,9 +26,12 @@ function RouteList() {
         <Route path="play/">
           <Route index element={<PlayGamePage/>}/>
           <Route path="createLobby" element={<CreateLobbyPage/>}/>
+          <Route exact path=":lobbyID" element={<LobbyPage/>} />
+          <Route path="404" element={<NotFoundPage/>}/>
         </Route>
-
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
+      
     </Routes>
       
   );

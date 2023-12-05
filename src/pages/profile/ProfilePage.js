@@ -8,7 +8,7 @@ import PersonalProfile from "../../components/profile/PersonalProfile";
 
 
 function ProfilePage() {
-  const { profileID } = useParams()
+  const { profileID } = useParams();
   const { user } = useAuth();
 
 
