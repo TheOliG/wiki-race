@@ -2,7 +2,7 @@ import { Alert, Card, Col, Container, Row, Form, Button, FormGroup } from "react
 import { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import WikiPageSearch from "../../components/play/search/WikiPageSearch";
-import { createNewLobby } from "../../firestoreFunctions/loby/createNewLobby";
+import { createNewLobby } from "../../firestoreFunctions/lobby/createNewLobby";
 import { useNavigate } from "react-router-dom";
 
 
