@@ -48,13 +48,9 @@ function CreateLobbyPage() {
     <div>
       <Card className='mx-5 my-2 pt-2' data-bs-theme="dark">
         <Card.Title className='text-center'>Create A New Lobby</Card.Title>
-        {error !== "" ?
-          <Alert key='dangerAlert' variant='danger' className='m-3'>
-           {error}
-          </Alert>
-          :
-          <></>
-        }
+        <Alert key='dangerAlert' variant='danger' className='m-3' hidden={error === ""}>
+          {error}
+        </Alert>
         <Card.Body>
           <Container>
             <Form>

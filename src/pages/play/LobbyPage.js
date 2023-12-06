@@ -1,7 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 import { Card, Col, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { db } from "../../firestoreInstance/firestoreInstance";
+import { auth, db } from "../../firestoreInstance/firestoreInstance";
 import { useEffect, useState } from "react";
 
 function LobbyPage(){
@@ -12,7 +12,7 @@ function LobbyPage(){
   const navigate = useNavigate();
   
   useEffect(() => {
-    console.log('getDoc executed')
+    console.log('getDoc executed');
     getDoc(doc(db,`lobby/${lobbyID}`)).then((doc)=>{
       if(!doc.exists()){
         navigate('/404');
@@ -22,6 +22,11 @@ function LobbyPage(){
         setLoadingPage(false);
       }
     });
+    // If the user isnt logged in then we want to redirect them to the login page
+    if(auth.currentUser === null){
+      navigate('/login');
+    }
+    
   },[lobbyID, navigate]);
 
 
