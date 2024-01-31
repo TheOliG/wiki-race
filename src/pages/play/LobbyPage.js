@@ -1,19 +1,23 @@
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 import { Card, Col, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { auth, db } from "../../firestoreInstance/firestoreInstance";
+import { db } from "../../firestoreInstance/firestoreInstance";
 import { useEffect, useState } from "react";
+import { requestToJoinLobby } from "../../firestoreFunctions/lobby/requestToJoinLobby";
 
 function LobbyPage(){
   const [loadingPage, setLoadingPage] = useState(true);
   const [lobbyDocData, setLobbyDocData] = useState({});
+  const [currentPlayers, setCurrentPlayers] = useState({});
 
   const { lobbyID } = useParams();
   const navigate = useNavigate();
   
   useEffect(() => {
+
+    //Gets the Current Lobby Data
     console.log('getDoc executed');
-    getDoc(doc(db,`lobby/${lobbyID}`)).then((doc)=>{
+    getDoc(doc(db,`activeLobbies/${lobbyID}`)).then((doc)=>{
       if(!doc.exists()){
         navigate('/404');
       }
@@ -21,13 +25,31 @@ function LobbyPage(){
         setLobbyDocData(doc.data());
         setLoadingPage(false);
       }
+    }).catch((err)=>{
+      console.log(err);
+      navigate('/');
     });
-    // If the user isnt logged in then we want to redirect them to the login page
-    if(auth.currentUser === null){
-      navigate('/login');
-    }
+
+    // Requests to join the lobby
+    console.log('requesting to join lobby...')
+    requestToJoinLobby(lobbyID).catch((err)=>{
+      console.log(err);
+      navigate('/');
+    });
     
+    getDocs(query(collection(db, `activeLobbies/${lobbyID}/players`))).then((snap)=>{
+      const tempObj = {};
+      snap.forEach((doc)=>{
+        tempObj[doc.id] = doc.data().username;
+      });
+      setCurrentPlayers(tempObj);
+      console.log(tempObj);
+    });
+
   },[lobbyID, navigate]);
+
+
+  
 
 
   return(
@@ -55,7 +77,25 @@ function LobbyPage(){
             <Card.Text>Players:</Card.Text>
           </Col>
         </Row>
-
+        <Row>
+          {Object.keys(currentPlayers).map((key)=>{
+            return(
+              <Col className="text-center">
+                {currentPlayers[key]}
+              </Col>
+            );
+          })}
+        </Row>
+        <Row>
+          <Col className="text-center">
+            <Card.Text>Code:</Card.Text>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="text-center">
+            <Card.Text className="fs-3 fw-bold">{lobbyDocData.lobbyCode}</Card.Text>
+          </Col>
+        </Row>
       </Card.Body>
       <Card.Footer>
         <Row>

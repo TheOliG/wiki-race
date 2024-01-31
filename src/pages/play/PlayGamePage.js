@@ -1,6 +1,7 @@
 import { Button, Col, Row } from "react-bootstrap";
 import JoinPublicGame from "../../components/play/JoinPublicGame";
 import { LinkContainer } from "react-router-bootstrap";
+import JoinPrivateGame from "../../components/play/JoinPrivateGame";
 
 
 
@@ -15,7 +16,7 @@ function PlayGamePage() {
         </Col>
         <Col>
           <div className="m-3 text-center">
-            <JoinPublicGame/>
+            <JoinPrivateGame/>
           </div>
         </Col>
       </Row>

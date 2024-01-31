@@ -1,4 +1,4 @@
-import { Alert, Card, Col, Container, Row, Form, Button, FormGroup } from "react-bootstrap";
+import { Alert, Card, Col, Container, Row, Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import WikiPageSearch from "../../components/play/search/WikiPageSearch";
@@ -74,23 +74,23 @@ function CreateLobbyPage() {
               </Row>
               <Row>
                 <Col>
-                  <FormGroup>
+                  <Form.Group>
                     <Form.Label >Max Players:</Form.Label>
                     <Form.Control type="number" value={maxPlayers} onChange={(e)=>{setMaxPlayers(e.target.value);}}/>
-                  </FormGroup>
+                  </Form.Group>
                 </Col>
                 <Col>
-                  <FormGroup>
+                  <Form.Group>
                     <Form.Label>Time Limit (Seconds):</Form.Label>
                     <Form.Control type="number" value={timeLimit} onChange={(e)=>{setTimeLimit(e.target.value);}}/>
-                  </FormGroup>
+                  </Form.Group>
                 </Col>
               </Row>
               <Row>
                 <Col className='text-center mt-3'>
-                  <FormGroup>
+                  <Form.Group>
                     <Button className="btn-success" onClick={handleSubmit}>Start!</Button>
-                  </FormGroup>
+                  </Form.Group>
                 </Col>
               </Row>
             </Form>
