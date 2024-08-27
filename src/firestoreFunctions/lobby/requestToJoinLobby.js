@@ -5,7 +5,7 @@ export async function requestToJoinLobby(lobbyID){
   try {
     // Only a logged in user can join, might change later 
     if(auth.currentUser !== null){
-      await setDoc(doc(db, `activeLobbies/${lobbyID}/playerRequests/${auth.currentUser.uid}`), {
+      await setDoc(doc(db, `activeLobbies/${lobbyID}/players/${auth.currentUser.uid}`), {
         timeJoined: Date.now(),
         username: auth.currentUser.displayName
       });

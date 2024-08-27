@@ -1,9 +1,11 @@
 import { collection, doc, getDoc, getDocs, query, onSnapshot } from "firebase/firestore";
 import { Card, Col, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { db } from "../../firestoreInstance/firestoreInstance";
+import { auth, db } from "../../firestoreInstance/firestoreInstance";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/authContext";
+import { requestToJoinLobby } from "../../firestoreFunctions/lobby/requestToJoinLobby";
+
 
 function LobbyPage(){
   const [loadingPage, setLoadingPage] = useState(true);
@@ -31,10 +33,15 @@ function LobbyPage(){
       console.log(err);
       navigate('/');
     });
-
-    // Requests to join the lobby
-    //if(lobbyID === user.id)
-    console.log(user.uid);
+    if(auth.currentUser === null){
+      alert("Please login before joining a lobby");
+      navigate('/');
+    }
+    
+    if(!requestToJoinLobby(lobbyID)){
+      alert("Could not join lobby, lobby may be full or the servers could be down");
+      navigate('/');
+    }
     // Gets all current players
     getDocs(query(collection(db, `activeLobbies/${lobbyID}/players`))).then((snap)=>{
       const tempObj = {};
