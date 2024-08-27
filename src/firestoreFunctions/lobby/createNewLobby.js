@@ -1,12 +1,11 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, setDoc, doc } from "firebase/firestore";
 import { db } from "../../firestoreInstance/firestoreInstance";
 
 // Will Return The New Lobby Doc Refrence. 
 // Will Throw Error If Insufficent Permissions.
-export async function createNewLobby(data){
-  const lobbyCollectionRef = collection(db, 'lobbyRequests');
+export async function createNewLobby(data, userID){
 
-  const newLobbyRef = await addDoc(lobbyCollectionRef, data);
+  const newLobbyRef = await setDoc(doc(db, 'activeLobbies', userID), data);
 
   return newLobbyRef;
 }

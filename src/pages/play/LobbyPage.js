@@ -1,14 +1,16 @@
-import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, onSnapshot } from "firebase/firestore";
 import { Card, Col, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firestoreInstance/firestoreInstance";
 import { useEffect, useState } from "react";
-import { requestToJoinLobby } from "../../firestoreFunctions/lobby/requestToJoinLobby";
+import { useAuth } from "../../context/authContext";
 
 function LobbyPage(){
   const [loadingPage, setLoadingPage] = useState(true);
   const [lobbyDocData, setLobbyDocData] = useState({});
   const [currentPlayers, setCurrentPlayers] = useState({});
+  const [lobbyCode, setLobbyCode] = useState("");
+  const { user } = useAuth();
 
   const { lobbyID } = useParams();
   const navigate = useNavigate();
@@ -31,12 +33,9 @@ function LobbyPage(){
     });
 
     // Requests to join the lobby
-    console.log('requesting to join lobby...')
-    requestToJoinLobby(lobbyID).catch((err)=>{
-      console.log(err);
-      navigate('/');
-    });
-    
+    //if(lobbyID === user.id)
+    console.log(user.uid);
+    // Gets all current players
     getDocs(query(collection(db, `activeLobbies/${lobbyID}/players`))).then((snap)=>{
       const tempObj = {};
       snap.forEach((doc)=>{
@@ -46,6 +45,14 @@ function LobbyPage(){
       console.log(tempObj);
     });
 
+
+    const unsub = onSnapshot(doc(db,`activeLobbies/${lobbyID}`), (doc) => {
+      console.log("Current data: ", doc.data());
+      setLobbyDocData(doc.data());
+    });
+
+    //This makes sure the listener is unsubscribed on unmount
+    return () => {unsub()}
   },[lobbyID, navigate]);
 
 
@@ -89,6 +96,7 @@ function LobbyPage(){
         <Row>
           <Col className="text-center">
             <Card.Text>Code:</Card.Text>
+            <Card.Text>{lobbyDocData.lobbyID}</Card.Text>
           </Col>
         </Row>
         <Row>

@@ -11,15 +11,15 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // All the arrows are important because it must store a function in a function https://stackoverflow.com/questions/55621212/is-it-possible-to-react-usestate-in-react 
+  // The arrows are important because it must store a function in a function https://stackoverflow.com/questions/55621212/is-it-possible-to-react-usestate-in-react 
   let userSnapshotUnsubscriber = ()=>null;
+  let userLobbySnapshotUnsubscriber = ()=>null;
 
 
   //This creates a listener that will call every time the user data is changed
   function createUserSnapshot(userID) {
     return onSnapshot(doc(db, "user", userID), async (changedDoc) => {
       const newData = changedDoc.data();
-      console.log(newData);
       setUser(newData);
     });
   }

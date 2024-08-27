@@ -4,6 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import WikiPageSearch from "../../components/play/search/WikiPageSearch";
 import { createNewLobby } from "../../firestoreFunctions/lobby/createNewLobby";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/authContext";
 
 
 function CreateLobbyPage() {
@@ -15,6 +16,7 @@ function CreateLobbyPage() {
   const [startTitle, setStartTitle] = useState("");
   const [targetTitle, setTargetTitle] = useState("");
 
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e) =>{
@@ -33,9 +35,10 @@ function CreateLobbyPage() {
         targetURL: targetURL, 
         targetTitle: targetTitle,
         maxPlayers: maxPlayers, 
-        timeLimit: timeLimit
-      }).then((res)=>{
-        navigate(`/play/${res.id}`);
+        timeLimit: timeLimit},
+        String(user.uid)
+      ).then((res)=>{
+        navigate(`/play/${user.uid}`);
       }).catch((err)=>{
         console.log(err);
         setError(JSON.stringify(err));
@@ -89,7 +92,17 @@ function CreateLobbyPage() {
               <Row>
                 <Col className='text-center mt-3'>
                   <Form.Group>
-                    <Button className="btn-success" onClick={handleSubmit}>Start!</Button>
+                    {
+                      user ?
+                      <Button className="btn-success" onClick={handleSubmit}>Start!</Button>
+                      :
+                      <div>
+                        <small>please login before creating a loby</small>
+                        <Button className="btn-secondary" disabled>Start!</Button>
+                      </div>
+                      
+                    }
+                    
                   </Form.Group>
                 </Col>
               </Row>
